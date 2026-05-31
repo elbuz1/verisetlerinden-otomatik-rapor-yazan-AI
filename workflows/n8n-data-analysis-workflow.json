@@ -1,0 +1,190 @@
+{
+  "name": "AI Rapor - Veri Analizi Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "analyze",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "analyze-webhook"
+    },
+    {
+      "parameters": {
+        "url": "http://backend:8000/api/upload/datasets/{{ $json.dataset_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "get-dataset-info",
+      "name": "Veri Seti Bilgisi Al",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [470, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "validate-dataset",
+      "name": "Veri Seti Dogrula",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [690, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://backend:8000/api/analysis/{{ $json.id }}",
+        "method": "POST",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "run-analysis",
+      "name": "Analiz Calistir",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [910, 200]
+    },
+    {
+      "parameters": {
+        "url": "http://backend:8000/api/reports/generate/{{ $json.dataset_id }}?format=pdf",
+        "method": "POST",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "generate-pdf",
+      "name": "PDF Rapor Olustur",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [1130, 200]
+    },
+    {
+      "parameters": {
+        "url": "http://backend:8000/api/reports/generate/{{ $json.dataset_id }}?format=docx",
+        "method": "POST",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "generate-docx",
+      "name": "DOCX Rapor Olustur",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [1130, 400]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "completed"
+            },
+            {
+              "name": "message",
+              "value": "Analiz ve rapor olusturma tamamlandi"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-response",
+      "name": "Yanit Hazirla",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [1350, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "respond-webhook",
+      "name": "Yanit Gonder",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1570, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"status\": \"error\", \"message\": \"Veri seti bulunamadi veya gecersiz\"}",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "id": "error-response",
+      "name": "Hata Yaniti",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [910, 450]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [{ "node": "Veri Seti Bilgisi Al", "type": "main", "index": 0 }]
+      ]
+    },
+    "Veri Seti Bilgisi Al": {
+      "main": [
+        [{ "node": "Veri Seti Dogrula", "type": "main", "index": 0 }]
+      ]
+    },
+    "Veri Seti Dogrula": {
+      "main": [
+        [{ "node": "Analiz Calistir", "type": "main", "index": 0 }],
+        [{ "node": "Hata Yaniti", "type": "main", "index": 0 }]
+      ]
+    },
+    "Analiz Calistir": {
+      "main": [
+        [
+          { "node": "PDF Rapor Olustur", "type": "main", "index": 0 },
+          { "node": "DOCX Rapor Olustur", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "PDF Rapor Olustur": {
+      "main": [
+        [{ "node": "Yanit Hazirla", "type": "main", "index": 0 }]
+      ]
+    },
+    "DOCX Rapor Olustur": {
+      "main": [
+        [{ "node": "Yanit Hazirla", "type": "main", "index": 0 }]
+      ]
+    },
+    "Yanit Hazirla": {
+      "main": [
+        [{ "node": "Yanit Gonder", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    { "name": "ai-rapor" },
+    { "name": "data-analysis" },
+    { "name": "automation" }
+  ]
+}

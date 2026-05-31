@@ -1,0 +1,22 @@
+[
+  {"musteri_id": 1, "isim": "Ahmet Yilmaz", "yas": 34, "sehir": "Istanbul", "harcama": 12500, "ziyaret_sayisi": 24, "uyelik_yili": 3, "memnuniyet": 4.5, "segment": "Premium"},
+  {"musteri_id": 2, "isim": "Ayse Demir", "yas": 28, "sehir": "Ankara", "harcama": 8900, "ziyaret_sayisi": 18, "uyelik_yili": 2, "memnuniyet": 4.2, "segment": "Standard"},
+  {"musteri_id": 3, "isim": "Mehmet Kaya", "yas": 45, "sehir": "Izmir", "harcama": 23400, "ziyaret_sayisi": 42, "uyelik_yili": 5, "memnuniyet": 4.8, "segment": "VIP"},
+  {"musteri_id": 4, "isim": "Fatma Celik", "yas": 31, "sehir": "Istanbul", "harcama": 5600, "ziyaret_sayisi": 12, "uyelik_yili": 1, "memnuniyet": 3.8, "segment": "Standard"},
+  {"musteri_id": 5, "isim": "Ali Ozturk", "yas": 52, "sehir": "Bursa", "harcama": 31200, "ziyaret_sayisi": 56, "uyelik_yili": 7, "memnuniyet": 4.9, "segment": "VIP"},
+  {"musteri_id": 6, "isim": "Zeynep Arslan", "yas": 26, "sehir": "Ankara", "harcama": 4200, "ziyaret_sayisi": 8, "uyelik_yili": 1, "memnuniyet": 3.5, "segment": "Basic"},
+  {"musteri_id": 7, "isim": "Burak Sahin", "yas": 39, "sehir": "Istanbul", "harcama": 18700, "ziyaret_sayisi": 35, "uyelik_yili": 4, "memnuniyet": 4.6, "segment": "Premium"},
+  {"musteri_id": 8, "isim": "Elif Yildiz", "yas": 33, "sehir": "Izmir", "harcama": 9800, "ziyaret_sayisi": 20, "uyelik_yili": 2, "memnuniyet": 4.0, "segment": "Standard"},
+  {"musteri_id": 9, "isim": "Emre Dogan", "yas": 47, "sehir": "Ankara", "harcama": 27600, "ziyaret_sayisi": 48, "uyelik_yili": 6, "memnuniyet": 4.7, "segment": "VIP"},
+  {"musteri_id": 10, "isim": "Selin Koc", "yas": 29, "sehir": "Istanbul", "harcama": 7300, "ziyaret_sayisi": 15, "uyelik_yili": 2, "memnuniyet": 4.1, "segment": "Standard"},
+  {"musteri_id": 11, "isim": "Omer Aslan", "yas": 41, "sehir": "Bursa", "harcama": 15400, "ziyaret_sayisi": 30, "uyelik_yili": 4, "memnuniyet": 4.4, "segment": "Premium"},
+  {"musteri_id": 12, "isim": "Deniz Aydin", "yas": 24, "sehir": "Izmir", "harcama": 3100, "ziyaret_sayisi": 6, "uyelik_yili": 1, "memnuniyet": 3.2, "segment": "Basic"},
+  {"musteri_id": 13, "isim": "Gul Polat", "yas": 37, "sehir": "Istanbul", "harcama": 20500, "ziyaret_sayisi": 38, "uyelik_yili": 5, "memnuniyet": 4.7, "segment": "VIP"},
+  {"musteri_id": 14, "isim": "Kemal Tekin", "yas": 55, "sehir": "Ankara", "harcama": 35800, "ziyaret_sayisi": 62, "uyelik_yili": 8, "memnuniyet": 5.0, "segment": "VIP"},
+  {"musteri_id": 15, "isim": "Hande Eren", "yas": 30, "sehir": "Izmir", "harcama": 6400, "ziyaret_sayisi": 14, "uyelik_yili": 2, "memnuniyet": 3.9, "segment": "Standard"},
+  {"musteri_id": 16, "isim": "Serkan Bilgin", "yas": 43, "sehir": "Istanbul", "harcama": 22100, "ziyaret_sayisi": 40, "uyelik_yili": 5, "memnuniyet": 4.6, "segment": "Premium"},
+  {"musteri_id": 17, "isim": "Merve Kaplan", "yas": 27, "sehir": "Bursa", "harcama": 5100, "ziyaret_sayisi": 10, "uyelik_yili": 1, "memnuniyet": 3.7, "segment": "Standard"},
+  {"musteri_id": 18, "isim": "Tolga Yilmaz", "yas": 36, "sehir": "Ankara", "harcama": 16800, "ziyaret_sayisi": 32, "uyelik_yili": 4, "memnuniyet": 4.5, "segment": "Premium"},
+  {"musteri_id": 19, "isim": "Banu Aksoy", "yas": 50, "sehir": "Istanbul", "harcama": 29400, "ziyaret_sayisi": 52, "uyelik_yili": 6, "memnuniyet": 4.8, "segment": "VIP"},
+  {"musteri_id": 20, "isim": "Can Demir", "yas": 32, "sehir": "Izmir", "harcama": 8200, "ziyaret_sayisi": 16, "uyelik_yili": 2, "memnuniyet": 4.0, "segment": "Standard"}
+]

@@ -1,0 +1,31 @@
+tarih,urun_adi,kategori,satis_miktari,birim_fiyat,toplam_gelir,maliyet,kar,bolge,musteri_tipi
+2024-01-05,Laptop Pro X1,Elektronik,45,15999.99,719999.55,499999.00,220000.55,Istanbul,Kurumsal
+2024-01-12,Kablosuz Mouse,Aksesuar,320,249.99,79996.80,47998.00,31998.80,Ankara,Bireysel
+2024-01-18,USB-C Hub,Aksesuar,180,599.99,107998.20,64800.00,43198.20,Izmir,Bireysel
+2024-01-25,Monitor 27inch,Elektronik,65,8499.99,552499.35,390000.00,162499.35,Istanbul,Kurumsal
+2024-02-02,Mekanik Klavye,Aksesuar,210,1299.99,272997.90,151200.00,121797.90,Ankara,Bireysel
+2024-02-09,Laptop Pro X1,Elektronik,52,15999.99,831999.48,571999.00,260000.48,Izmir,Kurumsal
+2024-02-15,Webcam HD,Aksesuar,150,899.99,134998.50,82500.00,52498.50,Istanbul,Bireysel
+2024-02-22,SSD 1TB,Depolama,280,1199.99,335997.20,196000.00,139997.20,Ankara,Kurumsal
+2024-03-01,Laptop Pro X1,Elektronik,38,15999.99,607999.62,418000.00,189999.62,Bursa,Kurumsal
+2024-03-08,Kablosuz Mouse,Aksesuar,410,249.99,102495.90,61500.00,40995.90,Istanbul,Bireysel
+2024-03-15,Monitor 27inch,Elektronik,78,8499.99,662999.22,468000.00,194999.22,Ankara,Kurumsal
+2024-03-22,RAM 32GB,Depolama,190,2499.99,474998.10,266000.00,208998.10,Izmir,Kurumsal
+2024-03-29,USB-C Hub,Aksesuar,220,599.99,131997.80,79200.00,52797.80,Istanbul,Bireysel
+2024-04-05,Laptop Pro X1,Elektronik,61,16499.99,1006499.39,610000.00,396499.39,Ankara,Kurumsal
+2024-04-12,Mekanik Klavye,Aksesuar,175,1299.99,227498.25,126000.00,101498.25,Izmir,Bireysel
+2024-04-19,SSD 1TB,Depolama,310,1199.99,371996.90,217000.00,154996.90,Istanbul,Kurumsal
+2024-04-26,Webcam HD,Aksesuar,195,899.99,175498.05,107250.00,68248.05,Bursa,Bireysel
+2024-05-03,Monitor 27inch,Elektronik,85,8499.99,722499.15,510000.00,212499.15,Istanbul,Kurumsal
+2024-05-10,Kablosuz Mouse,Aksesuar,450,249.99,112495.50,67500.00,44995.50,Ankara,Bireysel
+2024-05-17,Laptop Pro X1,Elektronik,72,16499.99,1187999.28,720000.00,467999.28,Izmir,Kurumsal
+2024-05-24,RAM 32GB,Depolama,205,2499.99,512497.95,287000.00,225497.95,Istanbul,Kurumsal
+2024-05-31,USB-C Hub,Aksesuar,260,599.99,155997.40,93600.00,62397.40,Ankara,Bireysel
+2024-06-07,SSD 1TB,Depolama,340,1199.99,407996.60,238000.00,169996.60,Izmir,Kurumsal
+2024-06-14,Mekanik Klavye,Aksesuar,230,1299.99,298997.70,165600.00,133397.70,Istanbul,Bireysel
+2024-06-21,Laptop Pro X1,Elektronik,80,16499.99,1319999.20,800000.00,519999.20,Ankara,Kurumsal
+2024-06-28,Monitor 27inch,Elektronik,92,8999.99,827999.08,552000.00,275999.08,Bursa,Kurumsal
+2024-07-05,Webcam HD,Aksesuar,160,899.99,143998.40,88000.00,55998.40,Istanbul,Bireysel
+2024-07-12,Kablosuz Mouse,Aksesuar,380,249.99,94996.20,57000.00,37996.20,Izmir,Bireysel
+2024-07-19,RAM 32GB,Depolama,175,2499.99,437498.25,245000.00,192498.25,Ankara,Kurumsal
+2024-07-26,Laptop Pro X1,Elektronik,55,16499.99,907499.45,550000.00,357499.45,Istanbul,Kurumsal

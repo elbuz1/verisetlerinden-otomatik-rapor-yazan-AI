@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+*.egg
+
+# Environment
+.env
+backend/.env
+
+# Node.js
+node_modules/
+.next/
+out/
+
+# Uploads & Generated Reports (kullanıcı verileri)
+uploads/*
+!uploads/.gitkeep
+reports/generated/*
+!reports/generated/.gitkeep
+
+# Database
+database/*.db
+database/*.sqlite3
+
+# Docker volumes
+postgres_data/
+n8n_data/
+
+# n8n local data
+.n8n/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temp
+*.tmp
+*.bak
+
+# Build artifacts
+backend/generate_report_script.py
+
+# Package lock (frontend)
+# package-lock.json is committed for reproducible builds

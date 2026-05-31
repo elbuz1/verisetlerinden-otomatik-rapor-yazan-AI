@@ -1,0 +1,78 @@
+version: "3.8"
+
+services:
+  # PostgreSQL Veritabani
+  postgres:
+    image: postgres:16-alpine
+    container_name: ai_rapor_db
+    environment:
+      POSTGRES_DB: ai_rapor_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend - FastAPI
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ai_rapor_backend
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@postgres:5432/ai_rapor_db
+      DATABASE_URL_SYNC: postgresql://postgres:postgres@postgres:5432/ai_rapor_db
+      SECRET_KEY: ${SECRET_KEY:-super-secret-key-change-in-production-2024}
+      N8N_WEBHOOK_URL: http://n8n:5678/webhook
+      CORS_ORIGINS: '["http://localhost:3000","http://frontend:3000"]'
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./reports:/app/reports
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # Frontend - Next.js
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ai_rapor_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+    depends_on:
+      - backend
+
+  # n8n - Workflow Automation
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: ai_rapor_n8n
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=admin123
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://localhost:5678/
+      - GENERIC_TIMEZONE=Europe/Istanbul
+    ports:
+      - "5678:5678"
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./workflows:/home/node/workflows
+
+volumes:
+  postgres_data:
+  n8n_data:
