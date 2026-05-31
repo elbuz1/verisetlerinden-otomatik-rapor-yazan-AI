@@ -1,0 +1,245 @@
+{
+  "id": "1",
+  "name": "Veri Analiz Pipeline - AI Rapor Sistemi",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "data-analysis",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 300],
+      "webhookId": "data-analysis"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:8000/api/n8n/trigger",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ dataset_id: $json.body.dataset_id, user_id: $json.body.user_id, format: $json.body.format || 'pdf' }) }}",
+        "options": {}
+      },
+      "id": "start-workflow",
+      "name": "1. Workflow Baslat",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:8000/api/n8n/parse-data",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ dataset_id: $json.dataset_id, workflow_id: $json.workflow_id }) }}",
+        "options": {}
+      },
+      "id": "parse-data",
+      "name": "2. Veri Parse Et",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [700, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:8000/api/n8n/run-analysis",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ dataset_id: $('1. Workflow Baslat').item.json.dataset_id, workflow_id: $('1. Workflow Baslat').item.json.workflow_id }) }}",
+        "options": {}
+      },
+      "id": "run-analysis",
+      "name": "3. Istatistiksel Analiz",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [950, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:8000/api/n8n/generate-comments",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ dataset_id: $('1. Workflow Baslat').item.json.dataset_id, workflow_id: $('1. Workflow Baslat').item.json.workflow_id }) }}",
+        "options": {}
+      },
+      "id": "generate-comments",
+      "name": "4. AI Yorum Uret",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:8000/api/n8n/generate-charts",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ dataset_id: $('1. Workflow Baslat').item.json.dataset_id, workflow_id: $('1. Workflow Baslat').item.json.workflow_id }) }}",
+        "options": {}
+      },
+      "id": "generate-charts",
+      "name": "5. Grafik Olustur",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1450, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:8000/api/n8n/generate-report",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ dataset_id: $('1. Workflow Baslat').item.json.dataset_id, user_id: $('1. Workflow Baslat').item.json.user_id, format: $json.body?.format || 'pdf', workflow_id: $('1. Workflow Baslat').item.json.workflow_id }) }}",
+        "options": {}
+      },
+      "id": "generate-report",
+      "name": "6. Rapor Olustur",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1700, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:8000/api/n8n/complete",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ dataset_id: $('1. Workflow Baslat').item.json.dataset_id, workflow_id: $('1. Workflow Baslat').item.json.workflow_id }) }}",
+        "options": {}
+      },
+      "id": "complete-workflow",
+      "name": "7. Tamamla",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1950, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ status: 'completed', message: 'Tum pipeline basariyla tamamlandi', dataset_id: $('1. Workflow Baslat').item.json.dataset_id, report: $('6. Rapor Olustur').item.json }) }}"
+      },
+      "id": "respond-webhook",
+      "name": "Webhook Yaniti",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [2200, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ status: 'error', message: 'Pipeline hatasi olustu', error: $json.error || 'Bilinmeyen hata' }) }}"
+      },
+      "id": "error-response",
+      "name": "Hata Yaniti",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [2200, 550]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "1. Workflow Baslat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Workflow Baslat": {
+      "main": [
+        [
+          {
+            "node": "2. Veri Parse Et",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. Veri Parse Et": {
+      "main": [
+        [
+          {
+            "node": "3. Istatistiksel Analiz",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. Istatistiksel Analiz": {
+      "main": [
+        [
+          {
+            "node": "4. AI Yorum Uret",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4. AI Yorum Uret": {
+      "main": [
+        [
+          {
+            "node": "5. Grafik Olustur",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5. Grafik Olustur": {
+      "main": [
+        [
+          {
+            "node": "6. Rapor Olustur",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "6. Rapor Olustur": {
+      "main": [
+        [
+          {
+            "node": "7. Tamamla",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "7. Tamamla": {
+      "main": [
+        [
+          {
+            "node": "Webhook Yaniti",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    {
+      "name": "ai-rapor-sistemi"
+    }
+  ]
+}
